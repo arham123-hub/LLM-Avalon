@@ -1,35 +1,86 @@
-# LLM-Game-Agent
-Code for our EMNLP 2024 paper: [LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay](https://arxiv.org/abs/2310.14985)
+# LLM-Game-Agent (Reproducibility Edition)
 
-![Agent Framework](avalon-agent-framework_v6.png)
+This is our reproduction of the EMNLP 2024 paper:  
+**“LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay”**  
+🔗 [Original Paper on arXiv](https://arxiv.org/abs/2310.14985)
 
-# Environment
-```shell
+We recreated the full Avalon game simulation with LLM-based agents using **Groq's LLaMA-3 API**, and optionally a local **TinyLlama** model.
+
+---
+
+## 🔧 Setup
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
 
-# Run Avalon
-Battle with Baseline in different camps
+Ensure you are using **Python 3.9+** and have the following additional packages installed (not in the original `requirements.txt`):
 
-Good Side
-```shell
-python run_avalon_battle.py --exp_name battle --camp good --game_count 10 --start_game_idx 0 
+```bash
+pip install transformers accelerate sentence-transformers
 ```
 
-Evil Side
-```shell
-python run_avalon_battle.py --exp_name battle --camp evil --game_count 10 --start_game_idx 0 
+---
+
+## 🔑 API Configuration
+
+To run with **Groq API** (LLaMA-3 model):
+
+1. Get a free API key from [https://console.groq.com](https://console.groq.com)
+2. Add this to your environment:
+   ```python
+   import os
+   os.environ["GROQ_API_KEY"] = "your_groq_api_key_here"
+   ```
+
+Alternatively, you can set it in the terminal before running:
+```bash
+export GROQ_API_KEY=your_groq_api_key_here
 ```
 
-# Cite
-If you find our paper useful for your research and applications, please kindly cite using this BibTeX:
-```latex
-@misc{lan2023llmbased,
-      title={LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay}, 
-      author={Yihuai Lan and Zhiqiang Hu and Lei Wang and Yang Wang and Deheng Ye and Peilin Zhao and Ee-Peng Lim and Hui Xiong and Hao Wang},
-      year={2023},
-      eprint={2310.14985},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
-}
+---
+
+## 🕹️ Run Avalon Simulation
+
+### Good Side
+```bash
+python run_avalon_battle.py --exp_name battle --camp good --game_count 3 --start_game_idx 0
 ```
+
+### Evil Side
+```bash
+python run_avalon_battle.py --exp_name battle --camp evil --game_count 3 --start_game_idx 0
+```
+
+---
+
+## 🧪 Model Notes
+
+- The **Groq API** runs fast and supports long context via `llama3-8b-8192`.
+- The **TinyLlama** model can be used locally for cost-free testing (but may break due to memory limits or weak responses).
+- You can configure which model is used in `chatgpt_agent.py` by switching between GroqAgent or a local LLaMA agent.
+
+---
+
+## 📦 Project Structure
+
+```
+LLM-Game-Agent/
+│
+├── run_avalon_battle.py      # Main entry point
+├── src/
+│   ├── agents/               # LLM Agent modules
+│   ├── games/avalon/         # Game mechanics & rules
+│   ├── apis/groq_api.py      # Groq API wrapper (new)
+│   └── ...
+├── requirements.txt
+├── README.md
+```
+
+---
+
+## 💡 Acknowledgement
+
+Original code: [lanluxuan/LLM-Game-Agent](https://github.com/lanluxuan/LLM-Game-Agent)
